@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class Login extends StatefulWidget {
@@ -11,6 +13,8 @@ class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
   final _controllerEmail = TextEditingController();
   final _controllerSenha = TextEditingController();
+  String _errorMessage = '';
+  late FirebaseAuth _auth;
 
   @override
   void dispose() {
@@ -21,6 +25,7 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    _initFirebase(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("Login"),
@@ -43,12 +48,17 @@ class _LoginState extends State<Login> {
                 },
               ),
               SizedBox(height: 20.0),
+              Text(
+                _errorMessage ?? "", // Display error message if it exists
+                style: TextStyle(color: Colors.red),
+              ),
               TextFormField(
                 controller: _controllerSenha,
                 obscureText: true,
                 decoration: InputDecoration(labelText: "Senha"),
                 validator: (value) {
-                  if (value?.isEmpty ?? false) {
+                  print(value);
+                  if (value?.isEmpty ?? true) {
                     return "Por favor, digite sua senha";
                   }
                   return null;
@@ -56,8 +66,8 @@ class _LoginState extends State<Login> {
               ),
               SizedBox(height: 40.0),
               ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/admin');
+                onPressed: () async{
+                  bool autorized = await _authenticate();
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(Color.fromARGB(239, 24, 27, 97)),
@@ -72,5 +82,27 @@ class _LoginState extends State<Login> {
         ),
       ),
     );
+  }
+
+  Future <void> _initFirebase(context)async{
+    print('chamou');
+    await Firebase.initializeApp();
+    _auth = FirebaseAuth.instance;
+    print('inicializou');
+    print(_auth);
+  }
+
+  Future _authenticate() async {
+    try {
+      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+          email: _controllerEmail.text,
+          password: _controllerSenha.text
+      );
+      return true;
+    }catch(e){
+      print('bateu no catch');
+      print(e);
+      return false;
+    }
   }
 }

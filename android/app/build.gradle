@@ -45,7 +45,7 @@ android {
         applicationId "com.example.orderplaced"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion 19
+        minSdkVersion 23
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
@@ -66,7 +66,7 @@ flutter {
 }
 
 dependencies {
-    implementation(plataform("com.google.firebase:firebase-bom:32.2.0"))
+    implementation platform('com.google.firebase:firebase-bom:33.0.0')
 }
 
-apply plugin: 'com.google.gms:google-services'
+apply plugin: 'com.google.gms.google-services'
