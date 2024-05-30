@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "467244986057",
+    "project_id": "orderplaced-2e9a5",
+    "storage_bucket": "orderplaced-2e9a5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:467244986057:android:3177bd23816be13a9ee718",
+        "android_client_info": {
+          "package_name": "com.example.orderplaced"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWCypWFm-DR1r2ZRVxBu4wz-rDbPvXbac"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
