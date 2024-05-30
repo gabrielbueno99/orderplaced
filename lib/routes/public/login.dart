@@ -60,7 +60,7 @@ class _LoginState extends State<Login> {
                   Navigator.pushNamed(context, '/admin');
                 },
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.blue),
+                  backgroundColor: MaterialStateProperty.all(Color.fromARGB(239, 24, 27, 97)),
                   shape: MaterialStateProperty.all(RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(0.0),
                   )),
