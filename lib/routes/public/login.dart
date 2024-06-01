@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -14,7 +17,8 @@ class _LoginState extends State<Login> {
   final _controllerEmail = TextEditingController();
   final _controllerSenha = TextEditingController();
   String _errorMessage = '';
-  late FirebaseAuth _auth;
+  final CollectionReference productCollection =
+  FirebaseFirestore.instance.collection("users");
 
   @override
   void dispose() {
@@ -68,6 +72,10 @@ class _LoginState extends State<Login> {
               ElevatedButton(
                 onPressed: () async{
                   bool autorized = await _authenticate();
+                  Navigator.pushNamed(context, '/admin');
+                  if(autorized) {
+                    Navigator.pushNamed(context, '/admin');
+                  }
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(Color.fromARGB(239, 24, 27, 97)),
@@ -85,18 +93,20 @@ class _LoginState extends State<Login> {
   }
 
   Future <void> _initFirebase(context)async{
-    print('chamou');
-    await Firebase.initializeApp();
-    _auth = FirebaseAuth.instance;
+    final CollectionReference productCollection =
+    FirebaseFirestore.instance.collection("products");
+    print(productCollection);
+    QuerySnapshot snapshot =
+    await productCollection.where("description", isEqualTo: "").get();
+    print(snapshot);
     print('inicializou');
-    print(_auth);
   }
 
   Future _authenticate() async {
     try {
-      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
-          email: _controllerEmail.text,
-          password: _controllerSenha.text
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: 'gabrielpregss@gmail.com',
+          password: '123456'
       );
       return true;
     }catch(e){

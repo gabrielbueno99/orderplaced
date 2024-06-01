@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class AddProduct extends StatefulWidget {
@@ -30,9 +31,9 @@ class _AddProductState extends State<AddProduct> {
       body: Form(
         key: _formKey,
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(10.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               TextFormField(
                 controller: _controllerProduto,
@@ -47,7 +48,6 @@ class _AddProductState extends State<AddProduct> {
               SizedBox(height: 20.0),
               TextFormField(
                 controller: _controllerValor,
-                obscureText: true,
                 decoration: InputDecoration(labelText: "produto"),
                 validator: (value) {
                   if (value?.isEmpty ?? false) {
@@ -59,7 +59,6 @@ class _AddProductState extends State<AddProduct> {
               SizedBox(height: 20.0),
               TextFormField(
                 controller: _controllerCategoria,
-                obscureText: true,
                 decoration: InputDecoration(labelText: "Categoria"),
                 validator: (value) {
                   if (value?.isEmpty ?? false) {
@@ -68,18 +67,12 @@ class _AddProductState extends State<AddProduct> {
                   return null;
                 },
               ),
-              SizedBox(height: 40.0),
+              SizedBox(height: 20.0),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/admin');
+                  createProduct();
                 },
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Color.fromARGB(
-                      239, 24, 27, 97)),
-                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(0.0),
-                  )),
-                ),
+
                 child: Text('Cadastrar', style: TextStyle(color: Colors.white),),
               ),
             ],
@@ -87,5 +80,19 @@ class _AddProductState extends State<AddProduct> {
         ),
       ),
     );
+  }
+
+  Future createProduct() async {
+    final docProd = FirebaseFirestore.instance.collection('products').doc();
+
+    final json = {
+      'id': docProd.id,
+      'name': _controllerProduto.text,
+      'age': _controllerValor.text,
+      'category': _controllerCategoria.text,
+    };
+
+    await docProd.set(json);
+
   }
 }

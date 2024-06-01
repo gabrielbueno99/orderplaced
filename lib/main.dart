@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:orderplaced/routes/public/home.dart';
 import 'package:orderplaced/routes/public/login.dart';
@@ -7,7 +8,9 @@ import 'package:orderplaced/routes/private/addProduct.dart';
 import 'package:orderplaced/provider/cardprovider.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+Future main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(
     ChangeNotifierProvider(
       create: (context) => CartProvider(),

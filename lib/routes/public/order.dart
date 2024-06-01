@@ -1,8 +1,10 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import '../../provider/cardprovider.dart';
 import 'package:provider/provider.dart';
 import 'package:orderplaced/widgets/shopping_button.dart';
 import 'package:orderplaced/widgets/product.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class Product {
   final String name;
@@ -17,6 +19,9 @@ class Order extends StatefulWidget {
 }
 
 class _OrderState extends State<Order> {
+  var productss = [];
+
+
   List<Product> product = [
     Product(name: 'Camisa Flutter', price: 59.90),
     Product(name: 'Caneca Flutter', price: 29.90),
