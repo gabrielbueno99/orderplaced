@@ -1,5 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:orderplaced/db/models/product.dart';
 
 class AddProduct extends StatefulWidget {
   const AddProduct({super.key});
@@ -13,6 +13,7 @@ class _AddProductState extends State<AddProduct> {
   final _controllerProduto = TextEditingController();
   final _controllerValor = TextEditingController();
   final _controllerCategoria = TextEditingController();
+  final product = Product();
 
   @override
   void dispose() {
@@ -83,16 +84,13 @@ class _AddProductState extends State<AddProduct> {
   }
 
   Future createProduct() async {
-    final docProd = FirebaseFirestore.instance.collection('products').doc();
-
-    final json = {
-      'id': docProd.id,
-      'name': _controllerProduto.text,
-      'age': _controllerValor.text,
-      'category': _controllerCategoria.text,
-    };
-
-    await docProd.set(json);
+   try {
+     var json =  product.createProduct(_controllerProduto.text, _controllerValor.text, _controllerCategoria.text);
+     print(json);
+   }catch (e) {
+     print('caiu no catch');
+     print(e);
+   }
 
   }
 }
