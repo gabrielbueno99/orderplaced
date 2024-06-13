@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 class ProductWidget extends StatefulWidget {
   final String name;
-  final double price;
+  final String price;
 
   ProductWidget({super.key, required this.name, required this.price});
 
@@ -36,7 +36,7 @@ class _ProductWidgetState extends State<ProductWidget> {
                 style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.white),
               ),
               Text(
-                widget.price.toStringAsFixed(2),
+                widget.price,
                 style: TextStyle(fontSize: 16.0, color: Colors.white),
               ),
             ],

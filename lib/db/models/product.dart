@@ -1,69 +1,37 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Product {
-
-  final docProd = FirebaseFirestore.instance.collection('products');
-  final String id;
   final String product;
   final String value;
   final String description;
 
   Product(
       {
-        this.id = '',
         this.product = '',
         this.value = '',
         this.description = '',
     }
   );
 
-  static Product fromJson(Map<String, dynamic>json) => Product(
-      id: json['id'],
-      product: json['product'],
-      value: json['value'],
-      description: json['description']
+  Product.fromJson(Map<String, dynamic?> json) : this(
+    product: json['product']! as String,
+    value: json['value']! as String,
+    description: json['description']! as String
   );
 
-  Future createProduct(String product, String value, String description) async {
-
-    var doc = docProd.doc();
-
-    final json = {
-      'id': docProd.id,
-      'product':product,
-      'value': value,
-      'description': description,
-    };
-
-    await doc.set(json);
-
-    return json;
-
+  Product copyWith({
+    String? product,
+    String? value,
+    String? description
+  }) {
+    return Product(product: this.product, value: this.value, description: this.description);
   }
 
-
-  Future updateProduct(id, String product, String value, String description) async {
-    var doc = docProd.doc(id);
-
-    final json = {
-      'id': docProd.id,
-      'product':product,
+  Map<String, Object?> toJson() {
+    return {
+      'product' : product,
       'value': value,
-      'description': description,
+      'description': description
     };
-
-    await doc.set(json);
-
-    return json;
-  }
-
-  Stream<List<Product>> getProduct() {
-    return docProd
-        .snapshots()
-        .map((snapshot)=> snapshot
-        .docs.map((doc)=> Product
-        .fromJson(doc.data()))
-        .toList());
   }
 
 }

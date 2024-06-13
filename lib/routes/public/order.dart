@@ -1,32 +1,21 @@
-import 'dart:async';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:orderplaced/db/services/DatabaseService.dart';
+import 'package:orderplaced/routes/private/addProduct.dart';
+import 'package:orderplaced/widgets/product.dart';
+import '../../db/models/product.dart';
 import '../../provider/cardprovider.dart';
 import 'package:provider/provider.dart';
 import 'package:orderplaced/widgets/shopping_button.dart';
-import 'package:orderplaced/widgets/product.dart';
-import 'package:firebase_database/firebase_database.dart';
 
-class Product {
-  final String name;
-  final double price;
-
-  Product({required this.name, required this.price});
-}
-
-class Order extends StatefulWidget {
+class Orders extends StatefulWidget {
+  const Orders({super.key});
   @override
-  _OrderState createState() => _OrderState();
+  _OrdersState createState() => _OrdersState();
 }
 
-class _OrderState extends State<Order> {
-  var productss = [];
-
-
-  List<Product> product = [
-    Product(name: 'Camisa Flutter', price: 59.90),
-    Product(name: 'Caneca Flutter', price: 29.90),
-    Product(name: 'Chapéu Flutter', price: 39.90),
-  ];
+class _OrdersState extends State<Orders> {
+  final DatabaseService _databaseService = DatabaseService();
 
 
   @override
@@ -45,18 +34,38 @@ class _OrderState extends State<Order> {
           )
         ],
       ),
-      body: ListView(
-        children: List.generate(product.length, (index) {
-          Product products = product[index];
-          return ProductWidget(
-            name: products.name,
-            price: products.price,
-          );
-        }),
-      ),
+      body: StreamBuilder(
+        stream: _databaseService.getProducts(),
+        builder: (context, snapshot) {
+          List products = snapshot.data?.docs ?? [];
+          if (products.isEmpty) {
+            return const Center(
+              child: Text('Não há produtos cadastrados'),
+            );
+          } else {
+            return ListView.builder(
+              itemCount: products.length,
+                itemBuilder: (context, index) {
+                Product product = products[index].data();
+                print(product.product);
+                return ProductWidget(name: product.product, price: product.value);
+            });
+          }
+        },
+      )
     );
   }
 }
 
+
+// ListView(
+// children: List.generate(product.length, (index) {
+// Produto products = product[index];
+// return ProductWidget(
+// name: products.name,
+// price: products.price,
+// );
+// }),
+// ),
 
 

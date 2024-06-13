@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:orderplaced/db/models/product.dart';
+import 'package:orderplaced/db/services/DatabaseService.dart';
 
 class AddProduct extends StatefulWidget {
   const AddProduct({super.key});
@@ -13,7 +14,8 @@ class _AddProductState extends State<AddProduct> {
   final _controllerProduto = TextEditingController();
   final _controllerValor = TextEditingController();
   final _controllerCategoria = TextEditingController();
-  final product = Product();
+  DatabaseService _databaseService = DatabaseService();
+  // final product = Product();
 
   @override
   void dispose() {
@@ -85,8 +87,8 @@ class _AddProductState extends State<AddProduct> {
 
   Future createProduct() async {
    try {
-     var json =  product.createProduct(_controllerProduto.text, _controllerValor.text, _controllerCategoria.text);
-     print(json);
+     Product product = Product(product: _controllerProduto.text, value: _controllerValor.text, description: _controllerCategoria.text);
+     _databaseService.addProduct(product);
    }catch (e) {
      print('caiu no catch');
      print(e);

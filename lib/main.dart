@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:orderplaced/routes/public/home.dart';
@@ -11,6 +12,9 @@ import 'package:provider/provider.dart';
 Future main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  FirebaseFirestore.instance.settings = const Settings(
+    persistenceEnabled: true
+  );
   runApp(
     ChangeNotifierProvider(
       create: (context) => CartProvider(),
@@ -36,7 +40,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/home': (context) => Home(),
         '/login': (context) => Login(),
-        '/order': (context) => Order(),
+        '/order': (context) => Orders(),
         '/admin' : (context) => AdminArea(),
         '/product' : (context) => AddProduct()
       }
