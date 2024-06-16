@@ -30,7 +30,7 @@ class _OrdersState extends State<Orders> {
           Container(
             margin: EdgeInsets.all(5.0),
             padding: EdgeInsets.all(5.0),
-            child: ShoppingButton(callback: (){}, contextOfCard: context),
+            child: ShoppingButton(callback: (){Navigator.pushNamed(context, '/closeorder');}, contextOfCard: context),
           )
         ],
       ),
@@ -47,8 +47,7 @@ class _OrdersState extends State<Orders> {
               itemCount: products.length,
                 itemBuilder: (context, index) {
                 Product product = products[index].data();
-                print(product.product);
-                return ProductWidget(name: product.product, price: product.value);
+                return ProductWidget(name: product.product,description: product.description, price: product.value);
             });
           }
         },
@@ -56,16 +55,3 @@ class _OrdersState extends State<Orders> {
     );
   }
 }
-
-
-// ListView(
-// children: List.generate(product.length, (index) {
-// Produto products = product[index];
-// return ProductWidget(
-// name: products.name,
-// price: products.price,
-// );
-// }),
-// ),
-
-

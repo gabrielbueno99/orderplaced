@@ -1,13 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:orderplaced/provider/cardprovider.dart';
+
 import 'package:orderplaced/routes/public/home.dart';
 import 'package:orderplaced/routes/public/login.dart';
 import 'package:orderplaced/routes/public/order.dart';
+import 'package:orderplaced/routes/public/orderDetailScreen.dart';
+import 'package:orderplaced/routes/public/closeOrder.dart';
+
 import 'package:orderplaced/routes/private/adminsettings.dart';
 import 'package:orderplaced/routes/private/addProduct.dart';
-import 'package:orderplaced/provider/cardprovider.dart';
-import 'package:provider/provider.dart';
+import 'package:orderplaced/routes/private/ordersTodo.dart';
+
+
 
 Future main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,7 +50,10 @@ class MyApp extends StatelessWidget {
         '/login': (context) => Login(),
         '/order': (context) => Orders(),
         '/admin' : (context) => AdminArea(),
-        '/product' : (context) => AddProduct()
+        '/product' : (context) => AddProduct(),
+        '/closeorder' : (context) => Closeorder(),
+        '/orderdetail': (context) => OrderDetailScreen(),
+        '/orderstodo' : (context) => OrdersTodo(),
       }
       ,
     );

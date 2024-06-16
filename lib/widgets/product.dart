@@ -4,9 +4,10 @@ import 'package:provider/provider.dart';
 
 class ProductWidget extends StatefulWidget {
   final String name;
+  final String description;
   final String price;
 
-  ProductWidget({super.key, required this.name, required this.price});
+  ProductWidget({super.key, required this.name, required this.description, required this.price});
 
   @override
   State<ProductWidget> createState() => _ProductWidgetState();
@@ -36,6 +37,10 @@ class _ProductWidgetState extends State<ProductWidget> {
                 style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold, color: Colors.white),
               ),
               Text(
+                widget.description,
+                style: TextStyle(fontSize: 16.0, color: Colors.white),
+              ),
+              Text(
                 widget.price,
                 style: TextStyle(fontSize: 16.0, color: Colors.white),
               ),
@@ -46,8 +51,22 @@ class _ProductWidgetState extends State<ProductWidget> {
             children: [
               FloatingActionButton(
                 onPressed: () {
+                  if (_itemCount > 0) {
+                    setState(() => _itemCount--);
+                    cartProvider.addProduct(widget.name, _itemCount, widget.price); // Call removeProduct method
+                  }
+                  print(cartProvider.products);
+                },
+                child: Icon(Icons.remove_shopping_cart),
+                backgroundColor: Colors.red, // Distinguish remove button
+                mini: true, // Use mini size for compact design
+              ),
+              FloatingActionButton(
+                onPressed: () {
                   setState(() => _itemCount++);
                   cartProvider.addItem();
+                  cartProvider.addProduct(widget.name, _itemCount, widget.price);
+                  print(cartProvider.products);
                 },
                 child: Icon(Icons.add_shopping_cart),
                 backgroundColor: Colors.white,

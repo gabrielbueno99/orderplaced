@@ -10,26 +10,20 @@ class AdminArea extends StatefulWidget {
 class _AdminAreaState extends State<AdminArea> {
   final List<Map<String, dynamic>> _configuracoes = [
     {
-      "titulo": "Notificações",
-      "icone": Icons.notifications,
-      "trailing": Switch(value: true, onChanged: (value) {}),
-      "onTap": "/home"
-    },
-    {
       "titulo": "Cadastrar produto",
       "icone": Icons.add_shopping_cart,
       "trailing": Icon(Icons.arrow_forward_ios),
       "onTap": "/product"
     },
     {
-      "titulo": "Idioma",
-      "icone": Icons.language,
+      "titulo": "Pedidos abertos",
+      "icone": Icons.check_box_rounded,
       "trailing": Icon(Icons.arrow_forward_ios),
-      "onTap": "/home"
+      "onTap": "/orderstodo"
     },
     {
-      "titulo": "Sobre",
-      "icone": Icons.info,
+      "titulo": "Home",
+      "icone": Icons.home,
       "trailing": Icon(Icons.arrow_forward_ios),
       "onTap": "/home"
     },
