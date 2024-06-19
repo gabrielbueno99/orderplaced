@@ -7,7 +7,6 @@ class ProductInOrder {
 
   ProductInOrder({required this.name, required this.qty, required this.value});
 
-  // Add fromJson and toJson methods for Product if needed
   factory ProductInOrder.fromJson(Map<String, dynamic> json) {
     return ProductInOrder(
       name: json['product'] as String? ?? '',

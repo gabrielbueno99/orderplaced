@@ -51,7 +51,6 @@ class DatabaseService {
         .get();
 
     if (querySnapshot.docs.isNotEmpty) {
-      print(querySnapshot.docs.first.id);
       return querySnapshot.docs.first.id;
     } else {
       return null;

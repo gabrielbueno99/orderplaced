@@ -53,20 +53,18 @@ class _ProductWidgetState extends State<ProductWidget> {
                 onPressed: () {
                   if (_itemCount > 0) {
                     setState(() => _itemCount--);
-                    cartProvider.addProduct(widget.name, _itemCount, widget.price); // Call removeProduct method
+                    cartProvider.addProduct(widget.name, _itemCount, widget.price);
                   }
-                  print(cartProvider.products);
                 },
                 child: Icon(Icons.remove_shopping_cart),
-                backgroundColor: Colors.red, // Distinguish remove button
-                mini: true, // Use mini size for compact design
+                backgroundColor: Colors.red,
+                mini: true,
               ),
               FloatingActionButton(
                 onPressed: () {
                   setState(() => _itemCount++);
                   cartProvider.addItem();
                   cartProvider.addProduct(widget.name, _itemCount, widget.price);
-                  print(cartProvider.products);
                 },
                 child: Icon(Icons.add_shopping_cart),
                 backgroundColor: Colors.white,

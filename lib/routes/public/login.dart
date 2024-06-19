@@ -1,9 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'dart:async';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -17,8 +14,6 @@ class _LoginState extends State<Login> {
   final _controllerEmail = TextEditingController();
   final _controllerSenha = TextEditingController();
   String _errorMessage = '';
-  final CollectionReference productCollection =
-  FirebaseFirestore.instance.collection("users");
 
   @override
   void dispose() {
@@ -29,7 +24,6 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    _initFirebase(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("Login"),
@@ -53,7 +47,7 @@ class _LoginState extends State<Login> {
               ),
               SizedBox(height: 20.0),
               Text(
-                _errorMessage ?? "", // Display error message if it exists
+                _errorMessage ?? "",
                 style: TextStyle(color: Colors.red),
               ),
               TextFormField(
@@ -61,7 +55,6 @@ class _LoginState extends State<Login> {
                 obscureText: true,
                 decoration: InputDecoration(labelText: "Senha"),
                 validator: (value) {
-                  print(value);
                   if (value?.isEmpty ?? true) {
                     return "Por favor, digite sua senha";
                   }
@@ -92,26 +85,14 @@ class _LoginState extends State<Login> {
     );
   }
 
-  Future <void> _initFirebase(context)async{
-    final CollectionReference productCollection =
-    FirebaseFirestore.instance.collection("products");
-    print(productCollection);
-    QuerySnapshot snapshot =
-    await productCollection.where("description", isEqualTo: "").get();
-    print(snapshot);
-    print('inicializou');
-  }
-
   Future _authenticate() async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: 'gabrielpregss@gmail.com',
-          password: '123456'
+          email: _controllerEmail.text,
+          password: _controllerSenha.text
       );
       return true;
-    }catch(e){
-      print('bateu no catch');
-      print(e);
+    }catch (e){
       return false;
     }
   }

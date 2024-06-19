@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:orderplaced/db/models/product.dart';
 import 'package:orderplaced/db/services/DatabaseService.dart';
+import 'package:orderplaced/widgets/modal.dart';
 
 class AddProduct extends StatefulWidget {
   const AddProduct({super.key});
@@ -15,7 +16,6 @@ class _AddProductState extends State<AddProduct> {
   final _controllerValor = TextEditingController();
   final _controllerCategoria = TextEditingController();
   DatabaseService _databaseService = DatabaseService();
-  // final product = Product();
 
   @override
   void dispose() {
@@ -77,6 +77,12 @@ class _AddProductState extends State<AddProduct> {
                 },
 
                 child: Text('Cadastrar', style: TextStyle(color: Colors.white),),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Color.fromARGB(239, 24, 27, 97)),
+                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(0.0),
+                  )),
+                ),
               ),
             ],
           ),
@@ -89,10 +95,20 @@ class _AddProductState extends State<AddProduct> {
    try {
      Product product = Product(product: _controllerProduto.text, value: _controllerValor.text, description: _controllerCategoria.text);
      _databaseService.addProduct(product);
+     showDialog(context: context, builder: (BuildContext context){
+       return ConfirmationDialog(title: 'Tudo certo!', message: 'Produto adicionado com sucesso');
+     });
    }catch (e) {
-     print('caiu no catch');
-     print(e);
+     showDialog(context: context, builder: (BuildContext context){
+       return ConfirmationDialog(title: 'Oops!', message: 'Algo deu errado');
+     });
+
    }
+
+  }
+
+
+  showDialogconfirmation() {
 
   }
 }

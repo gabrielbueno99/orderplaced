@@ -58,7 +58,7 @@ class _CloseorderState extends State<Closeorder> {
                       return;
                     }
                   },
-                  child: Text('Realizar Pedido'), // Passado como argumento
+                  child: Text('Realizar Pedido'),
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -85,11 +85,10 @@ class _CloseorderState extends State<Closeorder> {
       Orders order = Orders(created: timestamp, finished: false, products: productsInOrder);
       String orderId = await  _databaseService.addOrder(order);
 
-      // Navegando para outra tela e passando o ID
       Navigator.pushNamed(
         context,
         '/orderdetail',
-        arguments: Arguments(orderId), // Passando o ID como argumento
+        arguments: Arguments(orderId),
       );
     } catch (e) {
       print('Erro ao adicionar order: $e');

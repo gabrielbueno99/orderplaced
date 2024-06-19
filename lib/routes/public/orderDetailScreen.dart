@@ -1,10 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
 import 'package:orderplaced/routes/public/closeOrder.dart';
-
 import 'package:orderplaced/db/services/DatabaseService.dart';
-
 import 'package:orderplaced/db/models/orders.dart';
 
 
@@ -21,7 +18,6 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
     final args = ModalRoute.of(context)!.settings.arguments as Arguments;
     final String orderId = args.orderId;
     final DatabaseService _databaseService = DatabaseService();
-    print(orderId);
 
     return Scaffold(
       appBar: AppBar(
@@ -30,7 +26,6 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
       body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
         stream: _databaseService.getOrderById(orderId),
         builder: (context, snapshot) {
-          print(snapshot);
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           }
@@ -65,7 +60,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                 ),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(
+                  Navigator.popAndPushNamed(
                     context,
                     '/home',
                     arguments: Arguments(orderId),

@@ -8,7 +8,6 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)?.settings.arguments as Arguments?;
     final String orderId = args?.orderId ?? '';
-    print(orderId);
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -58,30 +57,30 @@ class Home extends StatelessWidget {
                 ),
               ],
             ),
-            // Exibindo os Rows condicionalmente
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(
-                      context,
-                      '/orderdetail',
-                      arguments: Arguments(orderId), // Passando o ID como argumento
-                    );
-                  },
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
-                        Color.fromARGB(239, 24, 27, 97)),
-                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(0.0),
-                    )),
+                if(orderId.isNotEmpty)
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(
+                        context,
+                        '/orderdetail',
+                        arguments: Arguments(orderId),
+                      );
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(
+                          Color.fromARGB(239, 24, 27, 97)),
+                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(0.0),
+                      )),
+                    ),
+                    child: Text(
+                      'Veja o andamento dos seu pedido!',
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
-                  child: Text(
-                    'Veja o andamento dos seu pedido!',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
               ],
             ),
           ],

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:orderplaced/db/models/orders.dart';
 
 class CartProvider extends ChangeNotifier {
   int _itemCount = 0;

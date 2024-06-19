@@ -1,7 +1,5 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:orderplaced/db/services/DatabaseService.dart';
-import 'package:orderplaced/routes/private/addProduct.dart';
 import 'package:orderplaced/widgets/product.dart';
 import '../../db/models/product.dart';
 import '../../provider/cardprovider.dart';
